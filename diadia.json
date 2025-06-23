@@ -1,6 +1,6 @@
 [
   {
-    "nome": "1abcDEFgHiJKlmNOpQrsTUVwxYZ",
+    "nome": "1Rl51UwlFsRem7sfVXmVfouY2Os2JvAKr",
     "tempo": 5000,
     "tipo": "imagem"
   },
@@ -8,10 +8,5 @@
     "nome": "2defGHIjKLmnOPqRsTuvWXYZ123",
     "tempo": 7000,
     "tipo": "imagem"
-  },
-  {
-    "nome": "3ghiJKLmnoPQrSTuvWXZ456789",
-    "tempo": 10000,
-    "tipo": "video"
   }
 ]
