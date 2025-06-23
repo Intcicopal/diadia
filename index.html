@@ -30,6 +30,8 @@
 			width: 100vw;
 			height: 100vh;
 			text-align: center;
+			justify-content: center;
+			margin: auto;
 		}
 
 		#galeria img,
@@ -80,15 +82,6 @@
 			background-color: #717171;
 			height: 100%;
 		}
-
-
-		.ajuste {
-			margin-top: -50;
-			margin-left: -8px;
-			width: 101% !important;
-			height: 100dvh !important;
-		}
-
 
 		#barra-contagem {
 			position: fixed;
@@ -164,7 +157,7 @@
 			}
 			else {
 				document.getElementById('spanRelogio').innerHTML = "00:00";
-				location.reload();
+				location.href = location.href.split('?')[0] + '?nocache=' + new Date().getTime();
 
 			}
 		}	
@@ -224,7 +217,7 @@
 						data.links.forEach(function (item, index) {
 
 							const iframe = document.createElement('iframe');
-							iframe.className = "mySlides ajuste";
+							iframe.className = "mySlides";
 							iframe.allowFullScreen = "true"
 							iframe.src = `https://app.powerbi.com/reportEmbed?reportId=${item.reportId}&autoAuth=true&ctid=${item.ctid}&pageName=${item.pageName}&navContentPaneEnabled=false&filterPaneEnabled=false&actionBarEnabled=false`;
 							galeria.appendChild(iframe);
