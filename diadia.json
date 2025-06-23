@@ -1,4 +1,5 @@
-[
+{
+  "imagens": [
   {
     "tipo": "imagem",
     "nome": "1.png",
@@ -8,5 +9,20 @@
     "tipo": "imagem",
     "nome": "2.png",
     "tempo": 5
-  }
-]
+  },
+  ],
+  "links": [
+    {
+      "reportId": "ef3f9bae-1219-471b-9507-61b4a708a6b3",
+      "ctid": "7237e24f-5c57-4444-a72b-80ca44c58630",
+      "pageName": "202a33cd9c2d1d953355"
+      "tempo": 10
+    },
+    {
+      "reportId": "ef3f9bae-1219-471b-9507-61b4a708a6b3",
+      "ctid": "7237e24f-5c57-4444-a72b-80ca44c58630",
+      "pageName": "9de9b7dc93dbded12a1b"
+      "tempo": 8
+    }
+  ]
+}
