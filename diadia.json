@@ -1,12 +1,12 @@
 [
   {
-    "nome": "1",
-    "tempo": 5000,
     "tipo": "imagem"
+    "nome": "1.png",
+    "tempo": 5,
   },
   {
-    "nome": "2",
-    "tempo": 7000,
     "tipo": "imagem"
+    "nome": "2.png",
+    "tempo": 7,
   }
 ]
