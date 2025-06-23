@@ -1,11 +1,11 @@
 [
   {
-    "tipo": "imagem"
+    "tipo": "imagem",
     "nome": "1.png",
     "tempo": 5,
   },
   {
-    "tipo": "imagem"
+    "tipo": "imagem",
     "nome": "2.png",
     "tempo": 7,
   }
