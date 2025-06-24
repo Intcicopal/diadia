@@ -1,18 +1,17 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 
 <head>
-	<!-- <meta http-equiv="refresh" content="60" /> -->
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Dia Dia é meu</title>
 	<link rel="shortcut icon"
-		HREF="https://static.wixstatic.com/media/7bddc8_b0a20b809f8647898991ef927d5203d8%7Emv2.png/v1/fill/w_192%2Ch_192%2Clg_1%2Cusm_0.66_1.00_0.01/7bddc8_b0a20b809f8647898991ef927d5203d8%7Emv2.png">
-
+		href="https://static.wixstatic.com/media/7bddc8_b0a20b809f8647898991ef927d5203d8%7Emv2.png/v1/fill/w_192%2Ch_192%2Clg_1%2Cusm_0.66_1.00_0.01/7bddc8_b0a20b809f8647898991ef927d5203d8%7Emv2.png">
 	<style>
 		* {
 			box-sizing: border-box;
-			margin: auto;
+			margin: 0;
+			padding: 0;
 		}
 
 		body {
@@ -30,12 +29,10 @@
 			width: 100vw;
 			height: 100vh;
 			text-align: center;
-			justify-content: center;
-			margin: auto;
 		}
 
 		#galeria img,
-		iframe {
+		#galeria iframe {
 			position: absolute;
 			top: 50%;
 			left: 50%;
@@ -46,41 +43,6 @@
 			max-width: 98%;
 			max-height: 98%;
 			object-fit: contain;
-			/* Pode manter, se quiser, mas pode remover para TVs mais antigas */
-		}
-
-		.text {
-			color: #f2f2f2;
-			font-size: 15px;
-			padding: 8px 12px;
-			position: absolute;
-			bottom: 8px;
-			height: 100%;
-			width: 100%;
-			text-align: center;
-		}
-
-		.numbertext {
-			color: #f2f2f2;
-			font-size: 12px;
-			padding: 8px 12px;
-			position: absolute;
-			top: 0;
-		}
-
-		.dot {
-			height: 15px;
-			width: 15px;
-			margin: 0 2px;
-			background-color: #bbb;
-			border-radius: 50%;
-			display: inline-block;
-			transition: background-color 0.6s ease;
-		}
-
-		.active {
-			background-color: #717171;
-			height: 100%;
 		}
 
 		#barra-contagem {
@@ -105,11 +67,22 @@
 			bottom: 10px;
 			left: 10px;
 			padding: 8px 12px;
-			background-color: rgba(0, 0, 0, 0.4);
-			color: rgba(255, 255, 255, 0.4);
+			background-color: rgba(0, 0, 0, 0.6);
+			color: white;
 			font-size: 14px;
 			border-radius: 4px;
 			z-index: 9999;
+		}
+
+		#status {
+			position: fixed;
+			top: 40%;
+			width: 100%;
+			text-align: center;
+			color: white;
+			font-size: 16px;
+			background: rgba(0, 0, 0, 0.6);
+			padding: 10px;
 		}
 	</style>
 </head>
@@ -118,173 +91,155 @@
 
 	<span id="spanRelogio"></span>
 	<div id="galeria">
-		<span>Erro, tentanto novamente em 5 segundos...</span>
-
-		<!-- <img class="mySlides ajuste" alt=""> -->
-		<!-- <img class="mySlides ajuste" src="./src/2.png" alt="">
-		<img class="mySlides ajuste" src="./src/3.png" alt=""> -->
+		<div id="status">Carregando slides...</div>
 	</div>
-
 	<div id="barra-contagem">
 		<div id="barra"></div>
 	</div>
 
-	<script language="javaScript">
-		window.onblur = function () { window.onfocus = function () { location.reload(true) } };
+	<script>
+		window.onblur = function () {
+			window.onfocus = function () {
+				location.href = location.href.split('?')[0] + '?nocache=' + new Date().getTime();
+			}
+		};
 
-		var min, seg;		//min = 10;		seg = 1		
-		const data = new Date(); // momento atual 
-		var seg = 60 - data.getSeconds()
-		var min = data.getMinutes() > 30 ? 60 - data.getMinutes() : 30 - data.getMinutes()
+		var tempopp = [];
+		var slideIndex = 0;
+		var min, seg;
 
 		function relogio() {
-			if ((min > 0) || (seg > 0)) {
-				if (seg == 0) {
-					seg = 59;
-					min = min - 1
-				}
-				else {
-					seg = seg - 1;
-				}
-				if (min.toString().length == 1) {
-					min = "0" + min;
-				}
-				if (seg.toString().length == 1) {
-					seg = "0" + seg;
-				}
-				document.getElementById('spanRelogio').innerHTML = "Próxima Atualização em: " + min + ":" + seg;
-				setTimeout('relogio()', 1000);
-			}
-			else {
-				document.getElementById('spanRelogio').innerHTML = "00:00";
-				location.href = location.href.split('?')[0] + '?nocache=' + new Date().getTime();
+			var data = new Date();
+			seg = 60 - data.getSeconds();
+			min = data.getMinutes() > 30 ? 60 - data.getMinutes() : 30 - data.getMinutes();
 
-			}
-		}	
-	</script>
+			function atualizar() {
+				if (min > 0 || seg > 0) {
+					if (seg === 0) {
+						seg = 59;
+						min--;
+					} else {
+						seg--;
+					}
 
-	<script>
+					var minStr = min < 10 ? "0" + min : min;
+					var segStr = seg < 10 ? "0" + seg : seg;
+					document.getElementById('spanRelogio').innerHTML = "Próxima Atualização em: " + minStr + ":" + segStr;
+					setTimeout(atualizar, 1000);
+				} else {
+					document.getElementById('spanRelogio').innerHTML = "00:00";
+					location.href = location.href.split('?')[0] + '?nocache=' + new Date().getTime();
+				}
+			}
+
+			atualizar();
+		}
+
 		function iniciarContagem(duracao) {
 			var barra = document.getElementById("barra");
 			var tempoRestante = duracao;
-			var intervalo = 50; // Atualizar a cada 50ms (ajustável)
+			var intervalo = 50;
 			var larguraInicial = 100;
 
-			clearInterval(barra.timer); // Se houver animação anterior, para ela
-
+			clearInterval(barra.timer);
 			barra.style.width = "100%";
 
 			barra.timer = setInterval(function () {
 				tempoRestante -= intervalo;
-				var progresso = Math.max(0, tempoRestante / duracao);
+				var progresso = Math.max(0, 1 - tempoRestante / duracao);
 				barra.style.width = (progresso * larguraInicial) + "%";
-
 				if (tempoRestante <= 0) {
 					clearInterval(barra.timer);
 					barra.style.width = "0%";
 				}
 			}, intervalo);
 		}
-	</script>
 
-	<script>
-		async function LoadImg(params) {
-			// https://drive.google.com/file/d/1tG9DNU-exAHVYaxfVlRnkq2FUxWwkhb0/view?usp=drive_link
+		function LoadImg() {
 			const urlJSON = "https://intcicopal.github.io/diadia/diadia.json";
-			// const urlJSON = "https://drive.google.com/file/d/1tG9DNU-exAHVYaxfVlRnkq2FUxWwkhb0/view?usp=drive_link";
-
-			await fetch(urlJSON)
-				.then(response => response.json())
+			fetch(urlJSON)
+				.then(response => {
+					if (!response.ok) throw new Error(`HTTP status ${response.status}`);
+					return response.json();
+				})
 				.then(data => {
 					const galeria = document.getElementById("galeria");
+					galeria.innerHTML = "";
+					tempopp = [];
+					slideIndex = 0;
 					var indexTT = 0;
+					var slidesExist = false;
 
 					// Processar imagens
 					if (data.imagens && Array.isArray(data.imagens)) {
-						data.imagens.forEach(function (item, index) {
+						data.imagens.forEach(function (item) {
 							const img = document.createElement('img');
 							img.className = "mySlides";
 							img.src = `https://intcicopal.github.io/diadia/src/${item.nome}`;
+							img.onerror = function () {
+								console.error("Falha ao carregar imagem:", img.src);
+								this.style.display = "none";
+							};
 							galeria.appendChild(img);
-							// console.log(`Imagem ${indexTT += index}:`, item.nome, "Tempo:", item.tempo);
-
 							tempopp[indexTT++] = item.tempo * 1000;
+							slidesExist = true;
 						});
 					}
 
-					// Processar links
+					// Processar links (exemplo: Power BI embed)
 					if (data.links && Array.isArray(data.links)) {
-						data.links.forEach(function (item, index) {
-
+						data.links.forEach(function (item) {
 							const iframe = document.createElement('iframe');
 							iframe.className = "mySlides";
-							iframe.allowFullScreen = "true"
+							iframe.allowFullscreen = true;
 							iframe.src = `https://app.powerbi.com/reportEmbed?reportId=${item.reportId}&autoAuth=true&ctid=${item.ctid}&pageName=${item.pageName}&navContentPaneEnabled=false&filterPaneEnabled=false&actionBarEnabled=false`;
 							galeria.appendChild(iframe);
-							// console.log(`Link ${indexTT += index}:`, item.url, "Tempo:", item.tempo);
-
 							tempopp[indexTT++] = item.tempo * 1000;
+							slidesExist = true;
 						});
 					}
 
-					// itens.forEach(function (item, index) {
-					// 	if (item.tipo === "imagem") {
-					// 		const img = document.createElement('img');
-					// 		img.className = "mySlides ajuste"
-					// 		img.src = `https://intcicopal.github.io/diadia/src/${item.nome}`
-					// 		galeria.appendChild(img);
-					// 	}
-
-					// 	if (item.tipo === "link") {
-					// 		const iframe = document.createElement('iframe');
-					// 		iframe.src = `https://app.powerbi.com/reportEmbed?reportId=ef3f9bae-1219-471b-9507-61b4a708a6b3&autoAuth=true&ctid=7237e24f-5c57-4444-a72b-80ca44c58630&pageName=9de9b7dc93dbded12a1b`;
-					// 		galeria.appendChild(iframe);
-					// 	}
-
-
-					// 	tempopp[index] = item.tempo * 1000;
-
-					// 	// Exemplo: tipos futuros como texto, PDF, etc...
-					// });
-					showSlides();
+					if (slidesExist) {
+						showSlides();
+					} else {
+						galeria.innerHTML = "<span style='color:white'>Nenhum slide encontrado no JSON.</span>";
+					}
 				})
 				.catch(error => {
 					console.error('Erro ao carregar JSON:', error);
-					console.log('Tentando novamente em 5 segundos...');
+					document.getElementById("status").innerHTML = "Erro ao carregar dados. Tentando novamente...";
 					setTimeout(() => {
 						location.href = location.href.split('?')[0] + '?nocache=' + new Date().getTime();
 					}, 5000);
 				});
 		}
 
-	</script>
-
-	<script>
-
-		LoadImg()
-
-		var tempopp = new Array;
-
-		var slideIndex = 0;
-
-		relogio();
-
 		function showSlides() {
-			var i;
 			var slides = document.getElementsByClassName("mySlides");
 
-			for (i = 0; i < slides.length; i++) { slides[i].style.display = "none"; } if (slideIndex >= slides.length) {
+			if (slides.length === 0) {
+				console.warn("Nenhum slide para exibir.");
+				return;
+			}
+
+			for (var i = 0; i < slides.length; i++) {
+				slides[i].style.display = "none";
+			}
+
+			if (slideIndex >= slides.length) {
 				slideIndex = 0;
 			}
 
 			slides[slideIndex].style.display = "block";
+			iniciarContagem(tempopp[slideIndex]);
 
 			setTimeout(showSlides, tempopp[slideIndex]);
-			iniciarContagem(tempopp[slideIndex])
 			slideIndex++;
 		}
-	</script>
 
+		LoadImg();
+		relogio();
+	</script>
 
 </body>
 
