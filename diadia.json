@@ -3,12 +3,22 @@
         {
             "tipo": "imagem",
             "nome": "1.png",
-            "tempo": 10
+            "tempo": 30
         },
         {
             "tipo": "imagem",
             "nome": "2.png",
-            "tempo": 5
+            "tempo": 30
+        },
+        {
+            "tipo": "imagem",
+            "nome": "2.png",
+            "tempo": 30
+        },
+        {
+            "tipo": "imagem",
+            "nome": "3.png",
+            "tempo": 30
         }
     ],
     "links": [
@@ -17,12 +27,6 @@
             "ctid": "7237e24f-5c57-4444-a72b-80ca44c58630",
             "pageName": "5a016c1b5d313301b02c",
             "tempo": 30
-        },
-        {
-            "reportId": "ef3f9bae-1219-471b-9507-61b4a708a6b3",
-            "ctid": "7237e24f-5c57-4444-a72b-80ca44c58630",
-            "pageName": "202a33cd9c2d1d953355",
-            "tempo": 10
         }
     ]
 }
