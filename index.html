@@ -194,9 +194,9 @@
 							iframe.className = "mySlides";
 							iframe.allowFullscreen = true;
 							// iframe.src = `https://app.powerbi.com/reportEmbed?reportId=${item.reportId}&autoAuth=true&ctid=${item.ctid}&pageName=${item.pageName}&navContentPaneEnabled=false&filterPaneEnabled=false&actionBarEnabled=false`;
-							// iframe.src = `https://app.powerbi.com/reportEmbed?reportId=${item.reportId}&autoAuth=true&ctid=${item.ctid}&pageName=${item.pageName}&navContentPaneEnabled=false`;
+							iframe.src = `https://app.powerbi.com/reportEmbed?reportId=${item.reportId}&autoAuth=true&ctid=${item.ctid}&pageName=${item.pageName}&navContentPaneEnabled=false`;
 							// iframe.src = `https://app.powerbi.com/view?r=eyJrIjoiMjU0YjM4M2MtMjBkOC00NTg4LWJlOTMtNjY3MWYzYjQwZWFmIiwidCI6IjcyMzdlMjRmLTVjNTctNDQ0NC1hNzJiLTgwY2E0NGM1ODYzMCJ9&pageName=${item.pageName}`;
-							iframe.src = `https://app.powerbi.com/view?r=eyJrIjoiMjU0YjM4M2MtMjBkOC00NTg4LWJlOTMtNjY3MWYzYjQwZWFmIiwidCI6IjcyMzdlMjRmLTVjNTctNDQ0NC1hNzJiLTgwY2E0NGM1ODYzMCJ9&pageName=${item.pageName}&navContentPaneEnabled=true&filterPaneEnabled=true&actionBarEnabled=true`
+							// iframe.src = `https://app.powerbi.com/view?r=eyJrIjoiMjU0YjM4M2MtMjBkOC00NTg4LWJlOTMtNjY3MWYzYjQwZWFmIiwidCI6IjcyMzdlMjRmLTVjNTctNDQ0NC1hNzJiLTgwY2E0NGM1ODYzMCJ9&pageName=${item.pageName}&navContentPaneEnabled=true&filterPaneEnabled=true&actionBarEnabled=true`
 							galeria.appendChild(iframe);
 							tempopp[indexTT++] = item.tempo * 1000;
 							slidesExist = true;
