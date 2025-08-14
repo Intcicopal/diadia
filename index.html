@@ -160,13 +160,22 @@
 			const minutos = agora.getMinutes();
 			const segundos = agora.getSeconds();
 
-			// próximo múltiplo de 15
-			const proximoBloco = Math.ceil((minutos + 1) / 15) * 15;
-			const minRest = (proximoBloco % 60) - minutos - 1;
-			const segRest = 59 - segundos;
+			// Encontrar próximo múltiplo de 15 (15, 30, 45, 60)
+			let proximoBloco = Math.ceil((minutos + 1) / 15) * 15;
 
-			// recarrega ao chegar em zero
-			if (minRest < 0 || (minRest === 0 && segRest === 0)) {
+			// Se passar de 60, volta para 60 (tratando como "fim da hora")
+			if (proximoBloco > 60) {
+				proximoBloco = 60;
+			}
+
+			// Calcular tempo restante
+			let minRest = proximoBloco - minutos - 1;
+			let segRest = 59 - segundos;
+
+			// Quando chegar em 00:00 dispara reload
+			if (minRest < 0) {
+				minRest = 0;
+				segRest = 0;
 				location.reload();
 				return;
 			}
