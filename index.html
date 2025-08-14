@@ -155,14 +155,28 @@
 			barra.style.animation = `barraAnim ${duracao / 1000}s linear forwards`;
 		}
 
-		function atualizarRelogio() {
+		function relogio() {
 			const agora = new Date();
-			let min = agora.getMinutes() > 30 ? 60 - agora.getMinutes() : 30 - agora.getMinutes();
-			let seg = 60 - agora.getSeconds();
+			const minutos = agora.getMinutes();
+			const segundos = agora.getSeconds();
+
+			// próximo múltiplo de 15
+			const proximoBloco = Math.ceil((minutos + 1) / 15) * 15;
+			const minRest = (proximoBloco % 60) - minutos - 1;
+			const segRest = 59 - segundos;
+
+			// recarrega ao chegar em zero
+			if (minRest < 0 || (minRest === 0 && segRest === 0)) {
+				location.reload();
+				return;
+			}
+
 			document.getElementById("spanRelogio").textContent =
-				`Próxima Atualização em: ${min.toString().padStart(2, '0')}:${seg.toString().padStart(2, '0')}`;
-			relogioTimer = setTimeout(atualizarRelogio, 1000);
+				`Próxima Atualização em: ${String(minRest).padStart(2, '0')}:${String(segRest).padStart(2, '0')}`;
 		}
+
+		// Atualiza relógio a cada segundo
+		relogioTimer = setInterval(relogio, 1000);
 
 		// Inicialização
 		fetch(urlJSON)
@@ -174,7 +188,6 @@
 				setTimeout(() => location.reload(), 5000);
 			});
 
-		atualizarRelogio();
 	</script>
 
 </body>
