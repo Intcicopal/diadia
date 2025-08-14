@@ -160,20 +160,22 @@
 			const minutos = agora.getMinutes();
 			const segundos = agora.getSeconds();
 
-			// próximo múltiplo de 15
-			const proximoBloco = Math.ceil((minutos + 1) / 15) * 15;
+			// Encontrar próximo múltiplo de 15 (15, 30, 45, 60)
+			let proximoBloco = Math.ceil((minutos + 1) / 15) * 15;
 
 			// Se passar de 60, volta para 60 (tratando como "fim da hora")
 			if (proximoBloco > 60) {
 				proximoBloco = 60;
 			}
 
-			const minRest = (proximoBloco % 60) - minutos - 1;
-			const segRest = 59 - segundos;
+			// Calcular tempo restante
+			let minRest = proximoBloco - minutos - 1;
+			let segRest = 59 - segundos;
 
-			// recarrega ao chegar em zero
-			if (minRest < 0 || (minRest === 0 && segRest === 0)) {
-				console.log('regres')
+			// Quando chegar em 00:00 dispara reload
+			if (minRest < 0) {
+				minRest = 0;
+				segRest = 0;
 				location.reload();
 				return;
 			}
@@ -184,7 +186,6 @@
 
 		// Atualiza relógio a cada segundo
 		relogioTimer = setInterval(relogio, 1000);
-
 
 		// Inicialização
 		fetch(urlJSON)
