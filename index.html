@@ -21,10 +21,10 @@
 		}
 
 		.mySlides {
-			display: block;
+			display: none;
 		}
 
-		#galerias {
+		#galeria {
 			position: relative;
 			width: 100vw;
 			height: 100vh;
@@ -71,7 +71,7 @@
 			color: white;
 			font-size: 14px;
 			border-radius: 4px;
-			z-index: 99999;
+			z-index: 9999;
 		}
 
 		#status {
@@ -98,11 +98,11 @@
 	</div>
 
 	<script>
-		// window.onblur = function () {
-		// 	window.onfocus = function () {
-		// 		location.href = location.href.split('?')[0] + '?nocache=' + new Date().getTime();
-		// 	}
-		// };
+		window.onblur = function () {
+			window.onfocus = function () {
+				location.href = location.href.split('?')[0] + '?nocache=' + new Date().getTime();
+			}
+		};
 
 		var tempopp = [];
 		var slideIndex = 0;
@@ -128,8 +128,7 @@
 					setTimeout(atualizar, 1000);
 				} else {
 					document.getElementById('spanRelogio').innerHTML = "00:00";
-					location.href = location.href.split('?')[0] //+ '?nocache=' + new Date().getTime();
-					// location.reload();
+					location.href = location.href.split('?')[0] + '?nocache=' + new Date().getTime();
 				}
 			}
 
@@ -194,7 +193,6 @@
 							iframe.className = "mySlides";
 							iframe.allowFullscreen = true;
 							iframe.src = `https://app.powerbi.com/reportEmbed?reportId=${item.reportId}&autoAuth=true&ctid=${item.ctid}&pageName=${item.pageName}&navContentPaneEnabled=false&filterPaneEnabled=false&actionBarEnabled=false`;
-							// iframe.src = https://app.powerbi.com/reportEmbed?reportId=${item.reportId}&autoAuth=true&ctid=${item.ctid}&pageName=${item.pageName}&navContentPaneEnabled=false;
 							galeria.appendChild(iframe);
 							tempopp[indexTT++] = item.tempo * 1000;
 							slidesExist = true;
@@ -211,8 +209,7 @@
 					console.error('Erro ao carregar JSON:', error);
 					document.getElementById("status").innerHTML = "Erro ao carregar dados. Tentando novamente...";
 					setTimeout(() => {
-						// location.href = location.href.split('?')[0] + '?nocache=' + new Date().getTime();
-						location.reload();
+						location.href = location.href.split('?')[0] + '?nocache=' + new Date().getTime();
 					}, 5000);
 				});
 		}
@@ -226,14 +223,14 @@
 			}
 
 			for (var i = 0; i < slides.length; i++) {
-				slides[i].style.zIndex = 1
+				slides[i].style.display = "none";
 			}
 
 			if (slideIndex >= slides.length) {
 				slideIndex = 0;
 			}
 
-			slides[slideIndex].style.zIndex = 9999;
+			slides[slideIndex].style.display = "block";
 			iniciarContagem(tempopp[slideIndex]);
 
 			setTimeout(showSlides, tempopp[slideIndex]);
