@@ -192,7 +192,7 @@
 			}
 
 			slides[slideIndex].style.zIndex = 9999;
-			document.querySelector("#barra-contagem").style.setProperty("--duration", tempopp[slideIndex] / 1000 + "s");
+			document.querySelector("#barra-contagem").style.setProperty("--duration", tempopp[slideIndex] + "ms");
 
 			setTimeout(showSlides, tempopp[slideIndex]);
 			slideIndex++;
@@ -206,7 +206,7 @@
 
 			// próximo múltiplo de 15 (00, 15, 30, 45)
 			const next = new Date(now);
-			next.setMinutes(Math.ceil((min + 1) / 15) * 15, 0, 0);
+			next.setMinutes(Math.ceil((min + 1) / 30) * 30, 0, 0);
 
 			// agenda reload único
 			setTimeout(() => {
