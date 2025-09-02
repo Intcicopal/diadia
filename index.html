@@ -24,11 +24,6 @@
 			display: block;
 		}
 
-		.mySlide.active {
-			opacity: 1;
-			z-index: 1;
-		}
-
 		#galerias {
 			position: relative;
 			width: 100vw;
@@ -67,9 +62,18 @@
 			width: 100%;
 			background-color: #4caf50;
 			animation: fill var(--duration) linear;
-			transform-origin: left;
-			transform: scaleX(0);
-			transition: transform linear;
+		}
+
+		@keyframes fill {
+			0% {
+				width: 0%;
+			}
+
+			100% {
+				width: 100%;
+			}
+
+			/* ao chegar aqui, reinicia do 0 */
 		}
 
 		#spanRelogio {
@@ -188,13 +192,7 @@
 			}
 
 			slides[slideIndex].style.zIndex = 9999;
-			document.getElementById('barra').style.transition = 'none';
-			document.getElementById('barra').style.transform = 'scaleX(0)';
-			// Força reflow para reiniciar animação
-			void document.getElementById('barra').offsetWidth;
-			document.getElementById('barra').style.transition = `transform ${tempopp[slideIndex]}ms linear`;
-			document.getElementById('barra').style.transform = 'scaleX(1)';
-
+			document.querySelector("#barra-contagem").style.setProperty("--duration", tempopp[slideIndex] + "ms");
 
 			setTimeout(showSlides, tempopp[slideIndex]);
 			slideIndex++;
