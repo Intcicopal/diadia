@@ -1,250 +1,237 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+<!-- -
+
+Juliano.piris - 30/09/2025 - feito ajustes para apenas mudar z-indez, e retirar o contador de segundos, vai mostrar apenas a hora da proxima atualização
+
+**/ -->
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Dia Dia é meu</title>
-	<link rel="shortcut icon"
-		href="https://static.wixstatic.com/media/7bddc8_b0a20b809f8647898991ef927d5203d8%7Emv2.png/v1/fill/w_192%2Ch_192%2Clg_1%2Cusm_0.66_1.00_0.01/7bddc8_b0a20b809f8647898991ef927d5203d8%7Emv2.png">
-	<style>
-		* {
-			box-sizing: border-box;
-			margin: 0;
-			padding: 0;
-		}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dia Dia é meu</title>
+    <link rel="shortcut icon"
+        href="https://static.wixstatic.com/media/7bddc8_b0a20b809f8647898991ef927d5203d8%7Emv2.png/v1/fill/w_192%2Ch_192%2Clg_1%2Cusm_0.66_1.00_0.01/7bddc8_b0a20b809f8647898991ef927d5203d8%7Emv2.png">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-		body {
-			font-family: Verdana, sans-serif;
-			overflow: hidden;
-			background-color: #1E22A8;
-		}
+        body {
+            font-family: Verdana, sans-serif;
+            overflow: hidden;
+            background-color: #1E22A8;
+        }
 
-		.mySlides {
-			display: none;
-		}
+        .mySlides {
+            z-index: 1;
+        }
 
-		#galeria {
-			position: relative;
-			width: 100vw;
-			height: 100vh;
-			text-align: center;
-		}
+        #galeria {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            text-align: center;
+        }
 
-		#galeria img,
-		#galeria iframe {
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			transform: translate(-50%, -50%);
-			border: none;
-			width: 100%;
-			height: 100%;
-			max-width: 98%;
-			max-height: 98%;
-			object-fit: contain;
-		}
+        #galeria img,
+        #galeria iframe {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: none;
+            width: 100%;
+            height: 100%;
+            max-width: 98%;
+            max-height: 98%;
+            object-fit: contain;
+        }
 
-		#barra-contagem {
-			position: fixed;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 8px;
-			background-color: rgba(0, 0, 0, 0.1);
-			z-index: 9999;
-			overflow: hidden;
-		}
+        #barra-contagem {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background-color: rgba(0, 0, 0, 0.1);
+            z-index: 9999;
+            overflow: hidden;
+        }
 
-		#barra {
-			height: 100%;
-			width: 100%;
-			background-color: #4caf50;
-		}
+        #barra {
+            height: 100%;
+            width: 100%;
+            background-color: #4caf50;
+        }
 
-		#spanRelogio {
-			position: fixed;
-			bottom: 10px;
-			left: 10px;
-			padding: 8px 12px;
-			background-color: rgba(0, 0, 0, 0.6);
-			color: white;
-			font-size: 14px;
-			border-radius: 4px;
-			z-index: 9999;
-		}
+        #spanRelogio {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            padding: 8px 12px;
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+            font-size: 14px;
+            border-radius: 4px;
+            z-index: 9999;
+        }
 
-		#status {
-			position: fixed;
-			top: 40%;
-			width: 100%;
-			text-align: center;
-			color: white;
-			font-size: 16px;
-			background: rgba(0, 0, 0, 0.6);
-			padding: 10px;
-		}
-	</style>
+        #status {
+            position: fixed;
+            top: 40%;
+            width: 100%;
+            text-align: center;
+            color: white;
+            font-size: 16px;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 10px;
+        }
+    </style>
 </head>
 
 <body>
 
-	<span id="spanRelogio"></span>
-	<div id="galeria">
-		<div id="status">Carregando slides...</div>
-	</div>
-	<div id="barra-contagem">
-		<div id="barra"></div>
-	</div>
+    <span id="spanRelogio"></span>
+    <div id="galeria">
+        <div id="status">Carregando slides...</div>
+    </div>
+    <div id="barra-contagem">
+        <div id="barra"></div>
+    </div>
 
-	<script>
-		// window.onblur = function () {
-		// 	window.onfocus = function () {
-		// 		location.href = location.href.split('?')[0] + '?nocache=' + new Date().getTime();
-		// 	}
-		// };
+    <script>
 
-		var tempopp = [];
-		var slideIndex = 0;
-		var min, seg;
+        var tempopp = [];
+        var slideIndex = 0;
+        var min, seg;
 
-		function relogio() {
-			var data = new Date();
-			seg = 60 - data.getSeconds();
-			min = data.getMinutes() > 30 ? 60 - data.getMinutes() : 30 - data.getMinutes();
+        function relogio() {
+            const el = document.getElementById("spanRelogio");
 
-			function atualizar() {
-				if (min > 0 || seg > 0) {
-					if (seg === 0) {
-						seg = 59;
-						min--;
-					} else {
-						seg--;
-					}
+            const now = new Date();
+            const min = now.getMinutes();
 
-					var minStr = min < 10 ? "0" + min : min;
-					var segStr = seg < 10 ? "0" + seg : seg;
-					document.getElementById('spanRelogio').innerHTML = "Próxima Atualização em: " + minStr + ":" + segStr;
-					setTimeout(atualizar, 1000);
-				} else {
-					document.getElementById('spanRelogio').innerHTML = "00:00";
-					location.href = location.href.split('?')[0] + '?nocache=' + new Date().getTime();
-					// location.reload();
-				}
-			}
+            // próximo múltiplo de 15 (00, 15, 30, 45)
+            const next = new Date(now);
+            next.setMinutes(Math.ceil((min + 1) / 30) * 30, 0, 0);
 
-			atualizar();
-		}
+            // agenda reload único
+            setTimeout(() => {
+                location.href = location.pathname + "?nocache=" + Date.now();
+            }, next - now);
 
-		function iniciarContagem(duracao) {
-			var barra = document.getElementById("barra");
-			var tempoRestante = duracao;
-			var intervalo = 50;
-			var larguraInicial = 100;
+            el.textContent = `Próxima Atualização: ${next.toLocaleString('pt-PT', { hour: '2-digit', minute: '2-digit' })}`;
+        }
 
-			clearInterval(barra.timer);
-			barra.style.width = "100%";
+        function iniciarContagem(duracao) {
+            var barra = document.getElementById("barra");
+            var tempoRestante = duracao;
+            var intervalo = 50;
+            var larguraInicial = 100;
 
-			barra.timer = setInterval(function () {
-				tempoRestante -= intervalo;
-				var progresso = Math.max(0, 1 - tempoRestante / duracao);
-				barra.style.width = (progresso * larguraInicial) + "%";
-				if (tempoRestante <= 0) {
-					clearInterval(barra.timer);
-					barra.style.width = "0%";
-				}
-			}, intervalo);
-		}
+            clearInterval(barra.timer);
+            barra.style.width = "100%";
 
-		function LoadImg() {
-			const urlJSON = "https://intcicopal.github.io/diadia/diadia.json";
-			fetch(urlJSON)
-				.then(response => {
-					if (!response.ok) throw new Error(`HTTP status ${response.status}`);
-					return response.json();
-				})
-				.then(data => {
-					const galeria = document.getElementById("galeria");
-					galeria.innerHTML = "";
-					tempopp = [];
-					slideIndex = 0;
-					var indexTT = 0;
-					var slidesExist = false;
+            barra.timer = setInterval(function () {
+                tempoRestante -= intervalo;
+                var progresso = Math.max(0, 1 - tempoRestante / duracao);
+                barra.style.width = (progresso * larguraInicial) + "%";
+                if (tempoRestante <= 0) {
+                    clearInterval(barra.timer);
+                    barra.style.width = "0%";
+                }
+            }, intervalo);
+        }
 
-					// Processar imagens
-					if (data.imagens && Array.isArray(data.imagens)) {
-						data.imagens.forEach(function (item) {
-							const img = document.createElement('img');
-							img.className = "mySlides";
-							img.src = `https://intcicopal.github.io/diadia/src/${item.nome}`;
-							img.onerror = function () {
-								console.error("Falha ao carregar imagem:", img.src);
-								this.style.display = "none";
-							};
-							galeria.appendChild(img);
-							tempopp[indexTT++] = item.tempo * 1000;
-							slidesExist = true;
-						});
-					}
+        function LoadImg() {
+            const urlJSON = "https://intcicopal.github.io/diadia/diadia.json";
+            fetch(urlJSON)
+                .then(response => {
+                    if (!response.ok) throw new Error(`HTTP status ${response.status}`);
+                    return response.json();
+                })
+                .then(data => {
+                    const galeria = document.getElementById("galeria");
+                    galeria.innerHTML = "";
+                    tempopp = [];
+                    slideIndex = 0;
+                    var indexTT = 0;
+                    var slidesExist = false;
 
-					// Processar links (exemplo: Power BI embed)
-					if (data.links && Array.isArray(data.links)) {
-						data.links.forEach(function (item) {
-							const iframe = document.createElement('iframe');
-							iframe.className = "mySlides";
-							iframe.allowFullscreen = true;
-							// iframe.src = `https://app.powerbi.com/reportEmbed?reportId=${item.reportId}&autoAuth=true&ctid=${item.ctid}&pageName=${item.pageName}&navContentPaneEnabled=false&filterPaneEnabled=false&actionBarEnabled=false`;
-							iframe.src = `https://app.powerbi.com/reportEmbed?reportId=${item.reportId}&autoAuth=true&ctid=${item.ctid}&pageName=${item.pageName}&navContentPaneEnabled=false`;
-							// iframe.src = `https://app.powerbi.com/view?r=eyJrIjoiMjU0YjM4M2MtMjBkOC00NTg4LWJlOTMtNjY3MWYzYjQwZWFmIiwidCI6IjcyMzdlMjRmLTVjNTctNDQ0NC1hNzJiLTgwY2E0NGM1ODYzMCJ9&pageName=${item.pageName}`;
-							// iframe.src = `https://app.powerbi.com/view?r=eyJrIjoiMjU0YjM4M2MtMjBkOC00NTg4LWJlOTMtNjY3MWYzYjQwZWFmIiwidCI6IjcyMzdlMjRmLTVjNTctNDQ0NC1hNzJiLTgwY2E0NGM1ODYzMCJ9&pageName=${item.pageName}&navContentPaneEnabled=true&filterPaneEnabled=true&actionBarEnabled=true`
-							galeria.appendChild(iframe);
-							tempopp[indexTT++] = item.tempo * 1000;
-							slidesExist = true;
-						});
-					}
+                    // Processar imagens
+                    if (data.imagens && Array.isArray(data.imagens)) {
+                        data.imagens.forEach(function (item) {
+                            const img = document.createElement('img');
+                            img.className = "mySlides";
+                            img.src = `https://intcicopal.github.io/diadia/src/${item.nome}`;
+                            img.onerror = function () {
+                                console.error("Falha ao carregar imagem:", img.src);
+                                this.style.display = "none";
+                            };
+                            galeria.appendChild(img);
+                            tempopp[indexTT++] = item.tempo * 1000;
+                            slidesExist = true;
+                        });
+                    }
 
-					if (slidesExist) {
-						showSlides();
-					} else {
-						galeria.innerHTML = "<span style='color:white'>Nenhum slide encontrado no JSON.</span>";
-					}
-				})
-				.catch(error => {
-					console.error('Erro ao carregar JSON:', error);
-					document.getElementById("status").innerHTML = "Erro ao carregar dados. Tentando novamente...";
-					setTimeout(() => {
-						// location.href = location.href.split('?')[0] + '?nocache=' + new Date().getTime();
-						location.reload();
-					}, 5000);
-				});
-		}
+                    // Processar links (exemplo: Power BI embed)
+                    if (data.links && Array.isArray(data.links)) {
+                        data.links.forEach(function (item) {
+                            const iframe = document.createElement('iframe');
+                            iframe.className = "mySlides";
+                            iframe.allowFullscreen = true;
+                           iframe.src = `https://app.powerbi.com/reportEmbed?reportId=${item.reportId}&autoAuth=true&ctid=${item.ctid}&pageName=${item.pageName}&navContentPaneEnabled=false`;
+                           galeria.appendChild(iframe);
+                            tempopp[indexTT++] = item.tempo * 1000;
+                            slidesExist = true;
+                        });
+                    }
 
-		function showSlides() {
-			var slides = document.getElementsByClassName("mySlides");
+                    if (slidesExist) {
+                        showSlides();
+                    } else {
+                        galeria.innerHTML = "<span style='color:white'>Nenhum slide encontrado no JSON.</span>";
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro ao carregar JSON:', error);
+                    document.getElementById("status").innerHTML = "Erro ao carregar dados. Tentando novamente...";
+                    setTimeout(() => {
+                        // location.href = location.href.split('?')[0] + '?nocache=' + new Date().getTime();
+                        location.reload();
+                    }, 5000);
+                });
+        }
 
-			if (slides.length === 0) {
-				console.warn("Nenhum slide para exibir.");
-				return;
-			}
+        function showSlides() {
+            var slides = document.getElementsByClassName("mySlides");
 
-			for (var i = 0; i < slides.length; i++) {
-				slides[i].style.display = "none";
-			}
+            if (slides.length === 0) {
+                console.warn("Nenhum slide para exibir.");
+                return;
+            }
 
-			if (slideIndex >= slides.length) {
-				slideIndex = 0;
-			}
+            for (var i = 0; i < slides.length; i++) {
+                slides[i].style.zIndex = 1
+            }
 
-			slides[slideIndex].style.display = "block";
-			iniciarContagem(tempopp[slideIndex]);
+            if (slideIndex >= slides.length) {
+                slideIndex = 0;
+            }
 
-			setTimeout(showSlides, tempopp[slideIndex]);
-			slideIndex++;
-		}
+            slides[slideIndex].style.zIndex = 9998;
+            iniciarContagem(tempopp[slideIndex]);
 
-		LoadImg();
-		relogio();
-	</script>
+            setTimeout(showSlides, tempopp[slideIndex]);
+            slideIndex++;
+        }
+
+        LoadImg();
+        relogio();
+    </script>
 
 </body>
 
