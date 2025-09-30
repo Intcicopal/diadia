@@ -129,7 +129,7 @@ Juliano.piris - 30/09/2025 - feito ajustes para apenas mudar z-indez, e retirar 
         function iniciarContagem(duracao) {
             var barra = document.getElementById("barra");
             var tempoRestante = duracao;
-            var intervalo = 50;
+            var intervalo = 1000;
             var larguraInicial = 100;
 
             clearInterval(barra.timer);
@@ -139,6 +139,8 @@ Juliano.piris - 30/09/2025 - feito ajustes para apenas mudar z-indez, e retirar 
                 tempoRestante -= intervalo;
                 var progresso = Math.max(0, 1 - tempoRestante / duracao);
                 barra.style.width = (progresso * larguraInicial) + "%";
+
+                console.log(progresso * larguraInicial)
                 if (tempoRestante <= 0) {
                     clearInterval(barra.timer);
                     barra.style.width = "0%";
@@ -146,7 +148,7 @@ Juliano.piris - 30/09/2025 - feito ajustes para apenas mudar z-indez, e retirar 
             }, intervalo);
         }
 
-        function LoadImg() {
+        function LoadJSON() {
             const urlJSON = "https://intcicopal.github.io/diadia/diadia.json";
             fetch(urlJSON)
                 .then(response => {
@@ -183,8 +185,8 @@ Juliano.piris - 30/09/2025 - feito ajustes para apenas mudar z-indez, e retirar 
                             const iframe = document.createElement('iframe');
                             iframe.className = "mySlides";
                             iframe.allowFullscreen = true;
-                           iframe.src = `https://app.powerbi.com/reportEmbed?reportId=${item.reportId}&autoAuth=true&ctid=${item.ctid}&pageName=${item.pageName}&navContentPaneEnabled=false`;
-                           galeria.appendChild(iframe);
+                            iframe.src = `https://app.powerbi.com/reportEmbed?reportId=${item.reportId}&autoAuth=true&ctid=${item.ctid}&pageName=${item.pageName}&navContentPaneEnabled=false`;
+                            galeria.appendChild(iframe);
                             tempopp[indexTT++] = item.tempo * 1000;
                             slidesExist = true;
                         });
@@ -222,14 +224,14 @@ Juliano.piris - 30/09/2025 - feito ajustes para apenas mudar z-indez, e retirar 
                 slideIndex = 0;
             }
 
-            slides[slideIndex].style.zIndex = 9998;
             iniciarContagem(tempopp[slideIndex]);
+            slides[slideIndex].style.zIndex = 9998;
 
             setTimeout(showSlides, tempopp[slideIndex]);
             slideIndex++;
         }
 
-        LoadImg();
+        LoadJSON();
         relogio();
     </script>
 
