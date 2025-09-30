@@ -140,7 +140,6 @@ Juliano.piris - 30/09/2025 - feito ajustes para apenas mudar z-indez, e retirar 
                 var progresso = Math.max(0, 1 - tempoRestante / duracao);
                 barra.style.width = (progresso * larguraInicial) + "%";
 
-                console.log(progresso * larguraInicial)
                 if (tempoRestante <= 0) {
                     clearInterval(barra.timer);
                     barra.style.width = "0%";
